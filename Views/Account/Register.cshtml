@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="col-md-5 mx-auto">
+            <div class="card bg-black text-light border-secondary">
+                <div class="card-body p-4">
+                    <h2 class="text-warning text-center mb-4">Register</h2>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <p class="mb-0">@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+
+                    <form method="post" asp-action="Register">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="fullName" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required minlength="6" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" name="confirmPassword" class="form-control" required minlength="6" />
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <hr class="border-secondary" />
+
+                    <p class="text-center mb-0">
+                        Already have an account?
+                        <a asp-action="Login" class="text-warning">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,50 @@
+@model MiniCinema.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="col-md-5 mx-auto">
+            <div class="card bg-black text-light border-secondary">
+                <div class="card-body p-4">
+                    <h2 class="text-warning text-center mb-4">Login</h2>
+
+                    <form asp-action="Login" method="post" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="admin@minicinema.com" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" placeholder="Admin123!" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+                            Login
+                        </button>
+                    </form>
+
+                    <hr class="border-secondary" />
+
+                    <p class="text-center mb-0">
+                        Don't have an account?
+                        <a asp-action="Register" class="text-warning">Register</a>
+                    </p>
+
+                    <p class="text-muted text-center mt-3 small">
+                        Admin: admin@minicinema.com / Admin123!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

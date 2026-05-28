@@ -1,0 +1,86 @@
+@model List<MiniCinema.Models.Booking>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-warning mb-4">My Bookings</h1>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning">
+                You do not have any bookings yet.
+            </div>
+
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-warning">
+                Browse Movies
+            </a>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var booking in Model)
+                {
+                    <div class="col-md-6">
+                        <div class="card bg-black text-light border-secondary">
+                            <div class="card-body">
+                                <h5 class="text-warning">
+                                    @booking.Showtime?.Movie?.Title
+                                </h5>
+
+                                <p class="mb-1">
+                                    <strong>Reference:</strong> @booking.BookingReference
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Date:</strong>
+                                    @booking.Showtime?.ShowDateTime.ToString("MMM dd, yyyy - HH:mm")
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Hall:</strong> @booking.Showtime?.Hall
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Tickets:</strong> @booking.NumberOfTickets
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Total:</strong> $@booking.TotalAmount
+                                </p>
+
+                                <p class="mb-3">
+                                    <strong>Status:</strong> @booking.Status
+                                </p>
+
+                                @if (booking.Seats.Any())
+                                {
+                                    <p class="mb-3">
+                                        <strong>Seats:</strong>
+                                        @string.Join(", ", booking.Seats.Select(s => s.SeatNumber))
+                                    </p>
+                                }
+
+                                @if (booking.Status == MiniCinema.Models.BookingStatus.Confirmed)
+                                {
+                                    <form asp-action="Cancel" method="post"
+                                          onsubmit="return confirm('Are you sure you want to cancel this booking?')">
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden" name="id" value="@booking.Id" />
+
+                                        <button type="submit" class="btn btn-outline-danger w-100">
+                                            Cancel Booking
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>

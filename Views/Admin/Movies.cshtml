@@ -1,0 +1,79 @@
+@model List<MiniCinema.Models.Movie>
+
+@{
+    ViewData["Title"] = "Manage Movies";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-warning">Manage Movies</h1>
+
+            <a asp-action="AddEditMovie" class="btn btn-warning">
+                Add New Movie
+            </a>
+        </div>
+
+        <table class="table table-dark table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Poster</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Rating</th>
+                    <th>Showtimes</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@movie.PosterUrl" style="width:60px;height:80px;object-fit:cover;" />
+                        </td>
+
+                        <td>@movie.Title</td>
+                        <td>@movie.Genre</td>
+                        <td>@movie.Rating</td>
+                        <td>@movie.Showtimes.Count</td>
+                        <td>@movie.IsActive</td>
+
+                        <td>
+                            <a asp-action="AddEditMovie"
+                               asp-route-id="@movie.Id"
+                               class="btn btn-sm btn-outline-warning">
+                                Edit
+                            </a>
+
+                            <a asp-action="AddShowtime"
+                               asp-route-id="@movie.Id"
+                               class="btn btn-sm btn-outline-info">
+                                Add Showtime
+                            </a>
+
+                            <form asp-action="DeleteMovie"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Delete this movie?')">
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" name="id" value="@movie.Id" />
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a asp-action="Dashboard" class="btn btn-outline-light">
+            Back to Dashboard
+        </a>
+    </div>
+</section>

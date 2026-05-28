@@ -1,0 +1,45 @@
+﻿@model List<MiniCinema.Models.Movie>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="py-5 text-center bg-black">
+    <div class="container">
+        <h1 class="display-4 fw-bold text-warning">Mini Cinema Booking</h1>
+        <p class="lead text-light">Browse movies, choose a showtime, and book your cinema tickets.</p>
+
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-warning btn-lg mt-3">
+            Browse Movies
+        </a>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4 text-warning">Now Showing</h2>
+
+        <div class="row g-4">
+            @foreach (var movie in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card bg-black text-light border-secondary h-100">
+                        <img src="@movie.PosterUrl" class="card-img-top" style="height:420px; object-fit:cover;" />
+
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">@movie.Title</h5>
+                            <p class="card-text">@movie.Description</p>
+                            <p class="text-muted mb-1">Genre: @movie.Genre</p>
+                            <p class="text-muted">Rating: @movie.Rating / 10</p>
+
+                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"
+                               class="btn btn-outline-warning w-100">
+                                Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

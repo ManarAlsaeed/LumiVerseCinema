@@ -1,0 +1,63 @@
+@model List<MiniCinema.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-warning mb-4">All Movies</h1>
+
+        <form method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       class="form-control"
+                       placeholder="Search by title, genre, or director..." />
+
+                <button class="btn btn-warning" type="submit">Search</button>
+
+                <a asp-action="Index" class="btn btn-outline-light">Clear</a>
+            </div>
+        </form>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning">
+                No movies found.
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var movie in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card bg-black text-light border-secondary h-100">
+                            <img src="@movie.PosterUrl"
+                                 class="card-img-top"
+                                 style="height:420px; object-fit:cover;" />
+
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">@movie.Title</h5>
+                                <p class="card-text">@movie.Description</p>
+
+                                <p class="text-muted mb-1">Genre: @movie.Genre</p>
+                                <p class="text-muted mb-1">Director: @movie.Director</p>
+                                <p class="text-muted">Duration: @movie.DurationMinutes min</p>
+
+                                <a asp-controller="Movies"
+                                   asp-action="Details"
+                                   asp-route-id="@movie.Id"
+                                   class="btn btn-outline-warning w-100">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>

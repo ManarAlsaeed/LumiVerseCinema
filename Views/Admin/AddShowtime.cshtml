@@ -1,0 +1,65 @@
+@model MiniCinema.Models.Showtime
+
+@{
+    ViewData["Title"] = "Add Showtime";
+    var movie = ViewBag.Movie as MiniCinema.Models.Movie;
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-warning mb-2">Add Showtime</h1>
+
+        <p class="text-light mb-4">
+            Movie: <strong class="text-warning">@movie?.Title</strong>
+        </p>
+
+        <div class="card bg-black text-light border-secondary">
+            <div class="card-body">
+                <form asp-action="AddShowtime" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" asp-for="MovieId" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Show Date & Time</label>
+                        <input asp-for="ShowDateTime" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="ShowDateTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hall</label>
+                        <input asp-for="Hall" class="form-control" />
+                        <span asp-validation-for="Hall" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Total Seats</label>
+                        <input asp-for="TotalSeats" class="form-control" />
+                        <span asp-validation-for="TotalSeats" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ticket Price</label>
+                        <input asp-for="TicketPrice" class="form-control" />
+                        <span asp-validation-for="TicketPrice" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label class="form-check-label">Active Showtime</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">
+                        Save Showtime
+                    </button>
+
+                    <a asp-action="Movies" class="btn btn-outline-light">
+                        Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

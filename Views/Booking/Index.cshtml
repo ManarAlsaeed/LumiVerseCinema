@@ -1,0 +1,78 @@
+@model MiniCinema.Models.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Book Ticket";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-warning mb-4">Book Ticket</h1>
+
+        <div class="card bg-black text-light border-secondary mb-4">
+            <div class="card-body">
+                <h3 class="text-warning">@Model.Movie?.Title</h3>
+
+                <p class="mb-1">
+                    <strong>Showtime:</strong>
+                    @Model.Showtime?.ShowDateTime.ToString("MMM dd, yyyy - HH:mm")
+                </p>
+
+                <p class="mb-1">
+                    <strong>Hall:</strong> @Model.Showtime?.Hall
+                </p>
+
+                <p class="mb-0">
+                    <strong>Ticket Price:</strong> $@Model.Showtime?.TicketPrice
+                </p>
+            </div>
+        </div>
+
+        <form asp-action="Confirm" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="showtimeId" value="@Model.ShowtimeId" />
+
+            <div class="card bg-black text-light border-secondary mb-4">
+                <div class="card-body">
+                    <h4 class="text-warning mb-3">Select Seats</h4>
+
+                    <p class="text-muted">
+                        Choose one or more available seats.
+                    </p>
+
+                    <div class="mb-4 text-center">
+                        <div class="bg-secondary text-light py-2 rounded mb-4">
+                            SCREEN
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            @foreach (var seat in Model.AvailableSeats.OrderBy(s => s.SeatNumber))
+                            {
+                                if (seat.IsBooked)
+                                {
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled>
+                                        @seat.SeatNumber
+                                    </button>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-outline-warning btn-sm">
+                                        <input type="checkbox"
+                                               name="selectedSeats"
+                                               value="@seat.SeatNumber"
+                                               class="btn-check" />
+                                        @seat.SeatNumber
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100">
+                        Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
