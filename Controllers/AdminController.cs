@@ -243,5 +243,117 @@ namespace MiniCinema.Controllers
 
             return View(showtime);
         }
+        // =================== FOOD MANAGEMENT ===================
+ 
+// GET: /Admin/Food
+public async Task<IActionResult> Food()
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    var items = await _context.FoodItems.OrderBy(f => f.Category).ToListAsync();
+    return View(items);
+}
+ 
+// GET: /Admin/AddEditFood
+public async Task<IActionResult> AddEditFood(int? id)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    if (id == null) return View(new FoodItem());
+    var item = await _context.FoodItems.FindAsync(id);
+    if (item == null) return NotFound();
+    return View(item);
+}
+ 
+// POST: /Admin/AddEditFood
+[HttpPost, ValidateAntiForgeryToken]
+public async Task<IActionResult> AddEditFood(FoodItem item)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    if (!ModelState.IsValid) return View(item);
+ 
+    if (item.Id == 0)
+        _context.FoodItems.Add(item);
+    else
+        _context.FoodItems.Update(item);
+ 
+    await _context.SaveChangesAsync();
+    TempData["Success"] = "Food item saved!";
+    return RedirectToAction("Food");
+}
+ 
+// POST: /Admin/DeleteFood/5
+[HttpPost, ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteFood(int id)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    var item = await _context.FoodItems.FindAsync(id);
+    if (item != null) { item.IsAvailable = false; await _context.SaveChangesAsync(); }
+    TempData["Success"] = "Food item removed.";
+    return RedirectToAction("Food");
+}
+ 
+// =================== OFFERS MANAGEMENT ===================
+ 
+// GET: /Admin/Offers
+public async Task<IActionResult> Offers()
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    var offers = await _context.Offers.OrderByDescending(o => o.StartDate).ToListAsync();
+    return View(offers);
+}
+ 
+// GET: /Admin/AddEditOffer
+public async Task<IActionResult> AddEditOffer(int? id)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    if (id == null) return View(new Offer { StartDate = DateTime.Today, EndDate = DateTime.Today.AddMonths(1) });
+    var offer = await _context.Offers.FindAsync(id);
+    if (offer == null) return NotFound();
+    return View(offer);
+}
+ 
+// POST: /Admin/AddEditOffer
+[HttpPost, ValidateAntiForgeryToken]
+public async Task<IActionResult> AddEditOffer(Offer offer)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    if (!ModelState.IsValid) return View(offer);
+ 
+    if (offer.Id == 0)
+        _context.Offers.Add(offer);
+    else
+        _context.Offers.Update(offer);
+ 
+    await _context.SaveChangesAsync();
+    TempData["Success"] = "Offer saved!";
+    return RedirectToAction("Offers");
+}
+ 
+// POST: /Admin/DeleteOffer/5
+[HttpPost, ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteOffer(int id)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
+ 
+    var offer = await _context.Offers.FindAsync(id);
+    if (offer != null) { offer.IsActive = false; await _context.SaveChangesAsync(); }
+    TempData["Success"] = "Offer deactivated.";
+    return RedirectToAction("Offers");
+}
     }
+    
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiniCinema")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f43ab16a8f722388d08c6062eaaa7693f12c630e")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiniCinema")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiniCinema")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniCinema.Data;
 
@@ -10,9 +11,11 @@ using MiniCinema.Data;
 namespace MiniCinema.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260528224726_FoodOffersHalls")]
+    partial class FoodOffersHalls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.8");
@@ -433,53 +436,6 @@ namespace MiniCinema.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Cast = "Leonardo DiCaprio, Joseph Gordon-Levitt",
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "A skilled thief enters dreams to steal secrets and plant ideas.",
-                            Director = "Christopher Nolan",
-                            DurationMinutes = 148,
-                            Genre = "Sci-Fi",
-                            IsActive = true,
-                            PosterUrl = "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
-                            Rating = 8.8000000000000007,
-                            ReleaseDate = new DateTime(2010, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Inception"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Cast = "Matthew McConaughey, Anne Hathaway",
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "A group of explorers travel through space to save humanity.",
-                            Director = "Christopher Nolan",
-                            DurationMinutes = 169,
-                            Genre = "Sci-Fi",
-                            IsActive = true,
-                            PosterUrl = "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-                            Rating = 8.6999999999999993,
-                            ReleaseDate = new DateTime(2014, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Interstellar"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Cast = "Christian Bale, Heath Ledger",
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Batman faces the Joker, a criminal mastermind spreading chaos.",
-                            Director = "Christopher Nolan",
-                            DurationMinutes = 152,
-                            Genre = "Action",
-                            IsActive = true,
-                            PosterUrl = "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-                            Rating = 9.0,
-                            ReleaseDate = new DateTime(2008, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "The Dark Knight"
-                        });
                 });
 
             modelBuilder.Entity("MiniCinema.Models.Offer", b =>
@@ -677,56 +633,6 @@ namespace MiniCinema.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("Showtimes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AvailableSeats = 60,
-                            Hall = "Hall A",
-                            HallId = 1,
-                            IsActive = true,
-                            MovieId = 1,
-                            ShowDateTime = new DateTime(2026, 6, 1, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 12.50m,
-                            TotalSeats = 60
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AvailableSeats = 60,
-                            Hall = "Hall B",
-                            HallId = 2,
-                            IsActive = true,
-                            MovieId = 1,
-                            ShowDateTime = new DateTime(2026, 6, 1, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 15.00m,
-                            TotalSeats = 60
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AvailableSeats = 60,
-                            Hall = "Hall C",
-                            HallId = 3,
-                            IsActive = true,
-                            MovieId = 2,
-                            ShowDateTime = new DateTime(2026, 6, 2, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 14.00m,
-                            TotalSeats = 60
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AvailableSeats = 60,
-                            Hall = "Hall A",
-                            HallId = 1,
-                            IsActive = true,
-                            MovieId = 3,
-                            ShowDateTime = new DateTime(2026, 6, 2, 20, 0, 0, 0, DateTimeKind.Unspecified),
-                            TicketPrice = 16.00m,
-                            TotalSeats = 60
-                        });
                 });
 
             modelBuilder.Entity("MiniCinema.Models.User", b =>
@@ -758,17 +664,6 @@ namespace MiniCinema.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "admin@minicinema.com",
-                            FullName = "Admin",
-                            IsAdmin = true,
-                            PasswordHash = "a8c0FSuYbAljQVFfcAQ5i/APfHmGAjviYalifjtzw+U="
-                        });
                 });
 
             modelBuilder.Entity("MiniCinema.Models.Booking", b =>
