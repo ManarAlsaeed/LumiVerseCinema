@@ -1,0 +1,144 @@
+@model List<MiniCinema.Models.Hall>
+@{
+    ViewData["Title"] = "Our Halls";
+}
+ 
+<section class="py-5 bg-dark min-vh-100">
+    <div class="container">
+ 
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <p class="text-warning small text-uppercase letter-spacing mb-1">🏛️ Experience</p>
+            <h1 class="text-white fw-bold display-5 mb-3">Our Screening Halls</h1>
+            <p class="text-muted mx-auto" style="max-width:550px;">
+                From classic Standard halls to cutting-edge IMAX — choose the experience that suits your movie.
+            </p>
+        </div>
+ 
+        <!-- Hall Type Tabs -->
+        <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="hallTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="pill" href="#all">All Halls</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="pill" href="#standard">Standard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hall-premium-tab" data-bs-toggle="pill" href="#premium">
+                    ✨ Premium
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hall-imax-tab" data-bs-toggle="pill" href="#imax">
+                    🎥 IMAX
+                </a>
+            </li>
+        </ul>
+ 
+        <div class="tab-content">
+            <!-- ALL HALLS -->
+            <div class="tab-pane fade show active" id="all">
+                <div class="row g-4">
+                    @foreach (var hall in Model)
+                    {
+                        @await Html.PartialAsync("_HallCard", hall)
+                    }
+                </div>
+            </div>
+ 
+            <!-- STANDARD -->
+            <div class="tab-pane fade" id="standard">
+                <div class="row g-4">
+                    @foreach (var hall in Model.Where(h => h.Type == MiniCinema.Models.HallType.Standard))
+                    {
+                        @await Html.PartialAsync("_HallCard", hall)
+                    }
+                </div>
+            </div>
+ 
+            <!-- PREMIUM -->
+            <div class="tab-pane fade" id="premium">
+                <div class="text-center mb-4 p-4 rounded-3" style="background:linear-gradient(135deg,rgba(245,197,24,0.1),rgba(255,165,0,0.05));">
+                    <h3 class="text-warning fw-bold">✨ Premium Experience</h3>
+                    <p class="text-muted">Fully reclining leather seats · Dolby Atmos · 4K Laser Projection · In-seat service</p>
+                </div>
+                <div class="row g-4">
+                    @foreach (var hall in Model.Where(h => h.Type == MiniCinema.Models.HallType.Premium))
+                    {
+                        @await Html.PartialAsync("_HallCard", hall)
+                    }
+                </div>
+            </div>
+ 
+            <!-- IMAX -->
+            <div class="tab-pane fade" id="imax">
+                <div class="text-center mb-4 p-4 rounded-3 imax-banner">
+                    <h3 class="text-white fw-bold">🎥 IMAX — Beyond the Screen</h3>
+                    <p class="text-muted">Six-story screen · 12-channel immersive sound · Laser projection · 4K resolution</p>
+                </div>
+                <div class="row g-4">
+                    @foreach (var hall in Model.Where(h => h.Type == MiniCinema.Models.HallType.IMAX))
+                    {
+                        @await Html.PartialAsync("_HallCard", hall)
+                    }
+                </div>
+            </div>
+        </div>
+ 
+        <!-- Comparison Table -->
+        <div class="mt-5 bg-black rounded-3 border border-secondary p-4">
+            <h4 class="text-white fw-bold mb-4 text-center">Hall Comparison</h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr class="text-muted small">
+                            <th class="text-start">Feature</th>
+                            <th>Standard</th>
+                            <th class="text-warning">Premium ✨</th>
+                            <th class="text-info">IMAX 🎥</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-start text-muted">Screen Size</td>
+                            <td>Standard</td>
+                            <td class="text-warning">Large 4K</td>
+                            <td class="text-info">Six-story</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start text-muted">Projection</td>
+                            <td>HD Digital</td>
+                            <td class="text-warning">4K Laser</td>
+                            <td class="text-info">IMAX Laser 4K</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start text-muted">Sound</td>
+                            <td>Stereo</td>
+                            <td class="text-warning">Dolby Atmos</td>
+                            <td class="text-info">IMAX 12-ch</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start text-muted">Seats</td>
+                            <td>Standard</td>
+                            <td class="text-warning">Full Recliner</td>
+                            <td class="text-info">Ergonomic</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start text-muted">In-seat Service</td>
+                            <td><i class="bi bi-x text-danger"></i></td>
+                            <td><i class="bi bi-check-lg text-success"></i></td>
+                            <td><i class="bi bi-x text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start text-muted">Surcharge</td>
+                            <td class="text-muted">+$0</td>
+                            <td class="text-warning">+$8–15</td>
+                            <td class="text-info">+$12</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+ 
+    </div>
+</section>

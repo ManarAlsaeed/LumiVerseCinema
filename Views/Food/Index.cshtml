@@ -1,0 +1,125 @@
+@model List<MiniCinema.Models.FoodItem>
+@{
+    ViewData["Title"] = "Food & Drinks";
+    var categories = Model.GroupBy(f => f.Category).OrderBy(g => g.Key);
+}
+ 
+<section class="py-5 bg-dark min-vh-100">
+    <div class="container">
+ 
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <p class="text-warning small text-uppercase letter-spacing mb-1">🍿 Concessions</p>
+            <h1 class="text-white fw-bold display-5 mb-3">Food & Drinks</h1>
+            <p class="text-muted">Order alongside your booking and have everything ready at your seat.</p>
+        </div>
+ 
+        <form asp-action="Order" method="post" id="foodOrderForm">
+            @Html.AntiForgeryToken()
+ 
+            @foreach (var group in categories)
+            {
+                <div class="mb-5">
+                    <h3 class="text-white fw-bold mb-4 border-bottom border-secondary pb-2">
+                        @(group.Key switch {
+                            MiniCinema.Models.FoodCategory.Popcorn => "🍿 Popcorn",
+                            MiniCinema.Models.FoodCategory.Drinks  => "🥤 Drinks",
+                            MiniCinema.Models.FoodCategory.Combo   => "🎁 Combos",
+                            MiniCinema.Models.FoodCategory.Snacks  => "🌮 Snacks",
+                            MiniCinema.Models.FoodCategory.Desserts=> "🍦 Desserts",
+                            _ => group.Key.ToString()
+                        })
+                    </h3>
+                    <div class="row g-4">
+                        @foreach (var item in group)
+                        {
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="food-card h-100 rounded-3 bg-black border border-secondary overflow-hidden">
+                                    <div style="height:160px;overflow:hidden;position:relative;">
+                                        <img src="@item.ImageUrl" alt="@item.Name"
+                                             style="width:100%;height:100%;object-fit:cover;" />
+                                        @if (item.IsBestSeller)
+                                        {
+                                            <div style="position:absolute;top:8px;left:8px;">
+                                                <span class="badge bg-warning text-dark fw-bold">⭐ Best Seller</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-white fw-semibold mb-1">@item.Name</h6>
+                                        <p class="text-muted small mb-2">@item.Description</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-warning fw-bold">$@item.Price.ToString("F2")</span>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary qty-btn"
+                                                        onclick="changeQty(@item.Id, -1)">−</button>
+                                                <span id="qty-@item.Id" class="text-white px-2 fw-semibold">0</span>
+                                                <button type="button" class="btn btn-sm btn-outline-warning qty-btn"
+                                                        onclick="changeQty(@item.Id, 1)">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hidden input for quantity -->
+                                <input type="hidden" name="quantities[@item.Id]" id="inp-@item.Id" value="0" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+ 
+            <!-- Sticky Order Summary -->
+            <div class="food-order-bar p-4 rounded-3 border border-warning sticky-bottom-panel mt-4">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <p class="text-muted mb-0 small">Order Summary</p>
+                        <h5 class="text-white fw-bold mb-0">
+                            Total: <span id="foodTotal" class="text-warning">$0.00</span>
+                            <small class="text-muted fw-normal ms-2" id="itemCount">(0 items)</small>
+                        </h5>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-warning fw-semibold px-5" id="orderBtn" disabled>
+                            <i class="bi bi-bag-check me-2"></i> Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+ 
+    </div>
+</section>
+ 
+@section Scripts {
+<script>
+const prices = {
+    @foreach (var item in Model)
+    {
+        @:@item.Id: @item.Price.ToString("0.00"),
+    }
+};
+ 
+let quantities = {};
+ 
+function changeQty(id, delta) {
+    quantities[id] = Math.max(0, (quantities[id] || 0) + delta);
+    document.getElementById('qty-' + id).textContent = quantities[id];
+    document.getElementById('inp-' + id).value = quantities[id];
+    updateTotal();
+}
+ 
+function updateTotal() {
+    let total = 0;
+    let count = 0;
+    for (const [id, qty] of Object.entries(quantities)) {
+        if (qty > 0) {
+            total += prices[id] * qty;
+            count += qty;
+        }
+    }
+    document.getElementById('foodTotal').textContent = '$' + total.toFixed(2);
+    document.getElementById('itemCount').textContent = '(' + count + ' items)';
+    document.getElementById('orderBtn').disabled = total === 0;
+}
+</script>
+}

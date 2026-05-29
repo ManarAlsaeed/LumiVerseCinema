@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniCinema.Data;
 
@@ -10,9 +11,11 @@ using MiniCinema.Data;
 namespace MiniCinema.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260529201419_AddFoodOffersHalls")]
+    partial class AddFoodOffersHalls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.8");
@@ -96,7 +99,7 @@ namespace MiniCinema.Migrations
                             Id = 1,
                             Category = 0,
                             Description = "Large bucket of golden butter popcorn",
-                            ImageUrl = "/images/popcorn-classic.png",
+                            ImageUrl = "https://images.unsplash.com/photo-1606297199700-4adee06dc45d?w=400",
                             IsAvailable = true,
                             IsBestSeller = true,
                             Name = "Classic Butter Popcorn",
@@ -107,7 +110,7 @@ namespace MiniCinema.Migrations
                             Id = 2,
                             Category = 0,
                             Description = "Sweet caramel glazed popcorn",
-                            ImageUrl = "/images/caramel.png",
+                            ImageUrl = "https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=400",
                             IsAvailable = true,
                             IsBestSeller = false,
                             Name = "Caramel Popcorn",
@@ -118,7 +121,7 @@ namespace MiniCinema.Migrations
                             Id = 3,
                             Category = 0,
                             Description = "Hot chili seasoned popcorn for spice lovers",
-                            ImageUrl = "/images/spicy.png",
+                            ImageUrl = "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400",
                             IsAvailable = true,
                             IsBestSeller = false,
                             Name = "Spicy Popcorn",
@@ -145,6 +148,17 @@ namespace MiniCinema.Migrations
                             IsBestSeller = false,
                             Name = "Fresh Orange Juice",
                             Price = 4.00m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = 1,
+                            Description = "500ml chilled water",
+                            ImageUrl = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400",
+                            IsAvailable = true,
+                            IsBestSeller = false,
+                            Name = "Mineral Water",
+                            Price = 2.00m
                         },
                         new
                         {
@@ -178,6 +192,17 @@ namespace MiniCinema.Migrations
                             IsBestSeller = false,
                             Name = "Nachos with Cheese",
                             Price = 5.00m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = 3,
+                            Description = "Classic cinema hot dog with mustard & ketchup",
+                            ImageUrl = "https://images.unsplash.com/photo-1619740455993-9d622990d41f?w=400",
+                            IsAvailable = true,
+                            IsBestSeller = false,
+                            Name = "Hot Dog",
+                            Price = 4.50m
                         },
                         new
                         {

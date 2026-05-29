@@ -64,19 +64,17 @@ namespace MiniCinema.Data
             // =================== SEED: FOOD ITEMS ===================
             modelBuilder.Entity<FoodItem>().HasData(
                 // Popcorn
-                new FoodItem { Id = 1, Name = "Classic Butter Popcorn", Description = "Large bucket of golden butter popcorn", Price = 5.50m, Category = FoodCategory.Popcorn, IsBestSeller = true, ImageUrl = "https://images.unsplash.com/photo-1606297199700-4adee06dc45d?w=400", IsAvailable = true },
-                new FoodItem { Id = 2, Name = "Caramel Popcorn", Description = "Sweet caramel glazed popcorn", Price = 6.00m, Category = FoodCategory.Popcorn, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=400", IsAvailable = true },
-                new FoodItem { Id = 3, Name = "Spicy Popcorn", Description = "Hot chili seasoned popcorn for spice lovers", Price = 5.50m, Category = FoodCategory.Popcorn, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400", IsAvailable = true },
+                new FoodItem { Id = 1, Name = "Classic Butter Popcorn", Description = "Large bucket of golden butter popcorn", Price = 5.50m, Category = FoodCategory.Popcorn, IsBestSeller = true, ImageUrl =  "/images/popcorn-classic.png", IsAvailable = true },
+                new FoodItem { Id = 2, Name = "Caramel Popcorn", Description = "Sweet caramel glazed popcorn", Price = 6.00m, Category = FoodCategory.Popcorn, IsBestSeller = false, ImageUrl = "/images/caramel.png", IsAvailable = true },
+                new FoodItem { Id = 3, Name = "Spicy Popcorn", Description = "Hot chili seasoned popcorn for spice lovers", Price = 5.50m, Category = FoodCategory.Popcorn, IsBestSeller = false, ImageUrl = "/images/spicy.png", IsAvailable = true },
                 // Drinks
                 new FoodItem { Id = 4, Name = "Coca-Cola Large", Description = "Chilled Coca-Cola 750ml", Price = 3.50m, Category = FoodCategory.Drinks, IsBestSeller = true, ImageUrl = "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400", IsAvailable = true },
                 new FoodItem { Id = 5, Name = "Fresh Orange Juice", Description = "Freshly squeezed orange juice", Price = 4.00m, Category = FoodCategory.Drinks, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400", IsAvailable = true },
-                new FoodItem { Id = 6, Name = "Mineral Water", Description = "500ml chilled water", Price = 2.00m, Category = FoodCategory.Drinks, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400", IsAvailable = true },
                 // Combos
                 new FoodItem { Id = 7, Name = "Classic Combo", Description = "Large popcorn + Large drink", Price = 8.00m, Category = FoodCategory.Combo, IsBestSeller = true, ImageUrl = "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400", IsAvailable = true },
                 new FoodItem { Id = 8, Name = "Family Combo", Description = "2 Large popcorns + 4 drinks + nachos", Price = 22.00m, Category = FoodCategory.Combo, IsBestSeller = true, ImageUrl = "https://images.unsplash.com/photo-1516195851888-6f1a981a862e?w=400", IsAvailable = true },
                 // Snacks
                 new FoodItem { Id = 9, Name = "Nachos with Cheese", Description = "Crispy nachos with warm cheese dip", Price = 5.00m, Category = FoodCategory.Snacks, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=400", IsAvailable = true },
-                new FoodItem { Id = 10, Name = "Hot Dog", Description = "Classic cinema hot dog with mustard & ketchup", Price = 4.50m, Category = FoodCategory.Snacks, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1619740455993-9d622990d41f?w=400", IsAvailable = true },
                 // Desserts
                 new FoodItem { Id = 11, Name = "Vanilla Ice Cream", Description = "Creamy vanilla soft serve", Price = 3.50m, Category = FoodCategory.Desserts, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400", IsAvailable = true },
                 new FoodItem { Id = 12, Name = "Chocolate Brownie", Description = "Warm fudgy chocolate brownie", Price = 4.00m, Category = FoodCategory.Desserts, IsBestSeller = false, ImageUrl = "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=400", IsAvailable = true }

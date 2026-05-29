@@ -1,0 +1,71 @@
+@model List<MiniCinema.Models.Offer>
+@{
+    ViewData["Title"] = "Manage Offers";
+}
+ 
+<section class="py-5 bg-dark min-vh-100">
+    <div class="container-fluid px-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-white fw-bold">
+                <i class="bi bi-tag text-warning me-2"></i> Manage Offers
+            </h1>
+            <div class="d-flex gap-2">
+                <a asp-action="Dashboard" class="btn btn-outline-secondary btn-sm">← Dashboard</a>
+                <a asp-action="AddEditOffer" class="btn btn-warning btn-sm">+ Add Offer</a>
+            </div>
+        </div>
+ 
+        <div class="bg-black rounded-3 border border-secondary p-4">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr class="text-muted small">
+                            <th>Title</th><th>Code</th><th>Type</th>
+                            <th>Discount</th><th>End Date</th><th>Hall</th><th>Status</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var offer in Model)
+                        {
+                            <tr>
+                                <td class="text-white align-middle fw-semibold">@offer.Title</td>
+                                <td class="align-middle">
+                                    <span class="badge bg-dark border border-secondary text-warning font-monospace">@offer.PromoCode</span>
+                                </td>
+                                <td class="text-muted align-middle"><small>@offer.Type</small></td>
+                                <td class="text-warning align-middle">
+                                    @(offer.Type == MiniCinema.Models.OfferType.FixedAmount ? $"${offer.DiscountValue}" : $"{offer.DiscountValue}%")
+                                </td>
+                                <td class="text-muted align-middle"><small>@offer.EndDate.ToString("MMM dd, yyyy")</small></td>
+                                <td class="align-middle">
+                                    <small class="text-muted">@(offer.ApplicableHallType?.ToString() ?? "All")</small>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge @(offer.IsActive && offer.EndDate >= DateTime.Today ? "bg-success" : "bg-secondary")">
+                                        @(offer.IsActive && offer.EndDate >= DateTime.Today ? "Active" : "Inactive")
+                                    </span>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="d-flex gap-1">
+                                        <a asp-action="AddEditOffer" asp-route-id="@offer.Id"
+                                           class="btn btn-sm btn-outline-warning">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form asp-action="DeleteOffer" method="post" class="d-inline"
+                                              onsubmit="return confirm('Deactivate this offer?')">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@offer.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

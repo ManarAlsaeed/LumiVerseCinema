@@ -1,0 +1,134 @@
+@model List<MiniCinema.Models.Offer>
+@{
+    ViewData["Title"] = "Offers & Promotions";
+}
+ 
+<section class="py-5 bg-dark min-vh-100">
+    <div class="container">
+ 
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <p class="text-warning small text-uppercase letter-spacing mb-1">🎫 Deals</p>
+            <h1 class="text-white fw-bold display-5 mb-3">Offers & Promotions</h1>
+            <p class="text-muted">Use a promo code at checkout to enjoy exclusive discounts.</p>
+        </div>
+ 
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-tag text-secondary" style="font-size:3.5rem;"></i>
+                <h4 class="text-muted mt-3">No active offers at the moment</h4>
+                <p class="text-muted small">Check back soon for new deals!</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var offer in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="offer-card rounded-3 bg-black border border-@offer.BadgeColor h-100 p-4 position-relative overflow-hidden">
+                            <!-- Background glow -->
+                            <div class="offer-glow offer-glow-@offer.BadgeColor"></div>
+ 
+                            <div class="position-relative">
+                                <!-- Offer Type Badge -->
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-@offer.BadgeColor text-dark fw-bold px-3 py-2">
+                                        @(offer.Type switch {
+                                            MiniCinema.Models.OfferType.Percentage   => $"{offer.DiscountValue}% OFF",
+                                            MiniCinema.Models.OfferType.FixedAmount  => $"${offer.DiscountValue} OFF",
+                                            MiniCinema.Models.OfferType.BuyOneGetOne => "BUY 1 GET 1",
+                                            MiniCinema.Models.OfferType.ComboMeal    => "COMBO DEAL",
+                                            _ => "OFFER"
+                                        })
+                                    </span>
+                                    @if (offer.ApplicableHallType.HasValue)
+                                    {
+                                        <span class="badge bg-dark border border-secondary text-muted">
+                                            @offer.ApplicableHallType.Value only
+                                        </span>
+                                    }
+                                </div>
+ 
+                                <h5 class="text-white fw-bold mb-2">@offer.Title</h5>
+                                <p class="text-muted small mb-4">@offer.Description</p>
+ 
+                                <!-- Promo Code Box -->
+                                <div class="promo-code-box d-flex align-items-center gap-3 p-3 rounded-3 mb-3">
+                                    <div>
+                                        <p class="text-muted small mb-0">Promo Code</p>
+                                        <h5 class="text-white fw-bold mb-0 font-monospace">@offer.PromoCode</h5>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-warning ms-auto copy-btn"
+                                            onclick="copyCode('@offer.PromoCode', this)">
+                                        <i class="bi bi-clipboard me-1"></i>Copy
+                                    </button>
+                                </div>
+ 
+                                <!-- Validity -->
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><i class="bi bi-calendar me-1"></i>Until @offer.EndDate.ToString("MMM dd, yyyy")</span>
+                                    @{
+                                        var daysLeft = (offer.EndDate - DateTime.Today).Days;
+                                    }
+                                    <span class="@(daysLeft <= 7 ? "text-danger" : "text-muted")">
+                                        @(daysLeft > 0 ? $"{daysLeft} days left" : "Expiring today!")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+ 
+        <!-- How to Use -->
+        <div class="mt-5 bg-black rounded-3 border border-secondary p-4">
+            <h5 class="text-white fw-bold mb-3">
+                <i class="bi bi-info-circle text-warning me-2"></i>How to Use Promo Codes
+            </h5>
+            <div class="row g-3">
+                <div class="col-md-4 d-flex align-items-start gap-3">
+                    <span class="badge bg-warning text-dark rounded-circle p-2 fw-bold">1</span>
+                    <div>
+                        <p class="text-white fw-semibold mb-0">Copy the Code</p>
+                        <small class="text-muted">Click the copy button on any offer.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-start gap-3">
+                    <span class="badge bg-warning text-dark rounded-circle p-2 fw-bold">2</span>
+                    <div>
+                        <p class="text-white fw-semibold mb-0">Book Your Ticket</p>
+                        <small class="text-muted">Choose your movie and showtime.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-start gap-3">
+                    <span class="badge bg-warning text-dark rounded-circle p-2 fw-bold">3</span>
+                    <div>
+                        <p class="text-white fw-semibold mb-0">Enter at Checkout</p>
+                        <small class="text-muted">Paste the code to apply the discount.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+    </div>
+</section>
+ 
+@section Scripts {
+<script>
+function copyCode(code, btn) {
+    navigator.clipboard.writeText(code).then(() => {
+        btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Copied!';
+        btn.classList.remove('btn-outline-warning');
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+            btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-warning');
+        }, 2000);
+    });
+}
+</script>
+}

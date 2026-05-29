@@ -1,0 +1,66 @@
+@model MiniCinema.Models.Hall
+ 
+<div class="col-lg-6">
+    <div class="hall-card rounded-3 overflow-hidden border @(Model.Type == MiniCinema.Models.HallType.IMAX ? "border-info" : Model.Type == MiniCinema.Models.HallType.Premium ? "border-warning" : "border-secondary")">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div style="height:200px;overflow:hidden;position:relative;">
+                <img src="@Model.ImageUrl" alt="@Model.Name"
+                     style="width:100%;height:100%;object-fit:cover;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,#0d0d0d);"></div>
+                <div style="position:absolute;top:12px;right:12px;">
+                    @if (Model.Type == MiniCinema.Models.HallType.IMAX)
+                    {
+                        <span class="badge bg-info fw-bold px-3 py-2 fs-6">IMAX</span>
+                    }
+                    else if (Model.Type == MiniCinema.Models.HallType.Premium)
+                    {
+                        <span class="badge bg-warning text-dark fw-bold px-3 py-2 fs-6">✨ PREMIUM</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary px-3 py-2">Standard</span>
+                    }
+                </div>
+            </div>
+        }
+ 
+        <div class="p-4 bg-black">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="text-white fw-bold mb-0">@Model.Name</h5>
+                @if (Model.PremiumSurcharge > 0)
+                {
+                    <span class="text-warning fw-semibold">+$@Model.PremiumSurcharge.ToString("F2")</span>
+                }
+            </div>
+            <p class="text-muted small mb-3">@Model.Description</p>
+ 
+            <div class="d-flex gap-2 flex-wrap mb-3">
+                <span class="badge bg-dark border border-secondary text-muted">
+                    <i class="bi bi-people me-1"></i>@Model.Capacity seats
+                </span>
+                @if (Model.HasDolbyAtmos)
+                {
+                    <span class="badge bg-dark border border-info text-info">
+                        <i class="bi bi-speaker me-1"></i>Dolby Atmos
+                    </span>
+                }
+                @if (Model.Has4K)
+                {
+                    <span class="badge bg-dark border border-warning text-warning">4K</span>
+                }
+                @if (Model.HasReclinerSeats)
+                {
+                    <span class="badge bg-dark border border-success text-success">
+                        <i class="bi bi-emoji-smile me-1"></i>Recliner
+                    </span>
+                }
+            </div>
+ 
+            <a asp-controller="Movies" asp-action="Index"
+               class="btn btn-sm @(Model.Type == MiniCinema.Models.HallType.IMAX ? "btn-info" : Model.Type == MiniCinema.Models.HallType.Premium ? "btn-warning" : "btn-outline-secondary") w-100">
+                Browse Movies in @Model.Name
+            </a>
+        </div>
+    </div>
+</div>

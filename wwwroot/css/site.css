@@ -29,3 +29,114 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+/* ===== HALLS ===== */
+.hall-card {
+    background: #0d0d0d;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.hall-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+.imax-banner {
+    background: linear-gradient(135deg, rgba(13,202,240,0.08), rgba(0,0,0,0));
+    border: 1px solid rgba(13,202,240,0.2);
+}
+.hall-imax-tab { color: #0dcaf0 !important; }
+.hall-premium-tab { color: var(--gold) !important; }
+
+/* ===== FOOD ===== */
+.food-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.food-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    line-height: 1;
+}
+.food-order-bar {
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(12px);
+    border-color: var(--gold) !important;
+    position: sticky;
+    bottom: 20px;
+    z-index: 100;
+}
+
+/* ===== OFFERS ===== */
+.offer-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.offer-card:hover {
+    transform: translateY(-4px);
+}
+.offer-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    border-radius: inherit;
+}
+.offer-glow-warning  { background: #ffc107; }
+.offer-glow-info     { background: #0dcaf0; }
+.offer-glow-success  { background: #198754; }
+.offer-glow-danger   { background: #dc3545; }
+.offer-glow-primary  { background: #0d6efd; }
+
+.promo-code-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.15);
+}
+.site-logo {
+    height: 42px;
+    width: 42px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.brand-name {
+    color: #ffc107;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+/* Header / Navbar size */
+.navbar {
+    min-height: 82px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+/* Logo image */
+.site-logo {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* MCinema text */
+.brand-name {
+    color: #ffc107;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+/* Navbar links */
+.navbar .nav-link {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 6px;
+}
+
+/* Buttons in navbar */
+.navbar .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 14px;
+}

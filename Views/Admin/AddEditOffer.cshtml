@@ -1,0 +1,102 @@
+@model MiniCinema.Models.Offer
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add Offer" : "Edit Offer";
+    bool isEdit = Model.Id != 0;
+}
+ 
+<section class="py-5 bg-dark min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="text-white fw-bold">
+                        <i class="bi bi-tag text-warning me-2"></i>
+                        @(isEdit ? "Edit Offer" : "Add Offer")
+                    </h2>
+                    <a asp-action="Offers" class="btn btn-outline-secondary btn-sm">← Back</a>
+                </div>
+ 
+                <div class="bg-black rounded-3 border border-secondary p-4">
+                    <form asp-action="AddEditOffer" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+ 
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label text-muted small">Offer Title *</label>
+                                <input asp-for="Title" class="form-control bg-dark text-white border-secondary"
+                                       placeholder="e.g. Student Tuesday Deal" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-muted small">Promo Code *</label>
+                                <input asp-for="PromoCode" class="form-control bg-dark text-white border-secondary font-monospace"
+                                       placeholder="PROMO20" style="text-transform:uppercase;" />
+                            </div>
+ 
+                            <div class="col-12">
+                                <label class="form-label text-muted small">Description *</label>
+                                <textarea asp-for="Description" class="form-control bg-dark text-white border-secondary"
+                                          rows="3"></textarea>
+                            </div>
+ 
+                            <div class="col-md-4">
+                                <label class="form-label text-muted small">Offer Type</label>
+                                <select asp-for="Type" class="form-select bg-dark text-white border-secondary"
+                                        asp-items="Html.GetEnumSelectList<MiniCinema.Models.OfferType>()">
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-muted small">Discount Value</label>
+                                <input asp-for="DiscountValue" type="number" min="0" max="100" step="0.5"
+                                       class="form-control bg-dark text-white border-secondary"
+                                       placeholder="e.g. 20 = 20%" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-muted small">Badge Color</label>
+                                <select asp-for="BadgeColor" class="form-select bg-dark text-white border-secondary">
+                                    <option value="warning">Gold (Warning)</option>
+                                    <option value="info">Blue (Info)</option>
+                                    <option value="success">Green (Success)</option>
+                                    <option value="danger">Red (Danger)</option>
+                                    <option value="primary">Dark Blue</option>
+                                </select>
+                            </div>
+ 
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small">Start Date</label>
+                                <input asp-for="StartDate" type="date" class="form-control bg-dark text-white border-secondary" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small">End Date</label>
+                                <input asp-for="EndDate" type="date" class="form-control bg-dark text-white border-secondary" />
+                            </div>
+ 
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small">Applicable Hall Type (optional)</label>
+                                <select asp-for="ApplicableHallType" class="form-select bg-dark text-white border-secondary">
+                                    <option value="">All Halls</option>
+                                    <option value="0">Standard</option>
+                                    <option value="1">Premium</option>
+                                    <option value="2">IMAX</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <div class="form-check form-switch">
+                                    <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsActive" class="form-check-label text-muted">Active</label>
+                                </div>
+                            </div>
+                        </div>
+ 
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-warning px-5 fw-semibold">
+                                <i class="bi bi-check-circle me-2"></i> @(isEdit ? "Save Changes" : "Add Offer")
+                            </button>
+                            <a asp-action="Offers" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
