@@ -1,40 +1,121 @@
-﻿@model List<MiniCinema.Models.Movie>
+@model List<MiniCinema.Models.Movie>
 
 @{
     ViewData["Title"] = "Home";
 }
 
-<section class="py-5 text-center bg-black">
-    <div class="container">
-        <h1 class="display-4 fw-bold text-warning">Mini Cinema Booking</h1>
-        <p class="lead text-light">Browse movies, choose a showtime, and book your cinema tickets.</p>
-
-        <a asp-controller="Movies" asp-action="Index" class="btn btn-warning btn-lg mt-3">
-            Browse Movies
-        </a>
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero-section position-relative overflow-hidden">
+    <div class="hero-bg-overlay"></div>
+    <div class="container position-relative py-5">
+        <div class="row align-items-center min-vh-hero">
+            <div class="col-lg-7">
+                <p class="text-warning small text-uppercase fw-semibold letter-spacing mb-2">🎬 Welcome to MCinema</p>
+                <h1 class="display-3 fw-black text-white mb-3 hero-title">
+                    The Ultimate<br/>
+                    <span class="text-warning">Cinema Experience</span>
+                </h1>
+                <p class="lead text-light mb-4" style="max-width:520px; opacity:0.85;">
+                    Browse the latest movies, pick your hall, grab your snacks, and book your perfect night out — all in one place.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Movies" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-4">
+                        🎬 Browse Movies
+                    </a>
+                    <a asp-controller="Halls" asp-action="Index" class="btn btn-outline-light btn-lg px-4">
+                        🏛️ Explore Halls
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-flex justify-content-end gap-3 mt-4 mt-lg-0">
+                <!-- Mini quick-stats -->
+                <div class="d-flex flex-column gap-3">
+                    <div class="hero-stat-card p-3 rounded-3">
+                        <p class="text-warning fw-bold fs-3 mb-0">3</p>
+                        <p class="text-muted small mb-0">Hall Types</p>
+                    </div>
+                    <div class="hero-stat-card p-3 rounded-3">
+                        <p class="text-warning fw-bold fs-3 mb-0">6</p>
+                        <p class="text-muted small mb-0">Halls Available</p>
+                    </div>
+                    <div class="hero-stat-card p-3 rounded-3">
+                        <p class="text-warning fw-bold fs-3 mb-0">5+</p>
+                        <p class="text-muted small mb-0">Active Offers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
+<!-- ═══════════════════════ FEATURE STRIP ═══════════════════════ -->
+<section class="py-4 bg-black border-top border-bottom border-secondary">
+    <div class="container">
+        <div class="row g-3 text-center">
+            <div class="col-6 col-md-3">
+                <p class="text-warning fs-4 mb-1">🎥</p>
+                <p class="text-white small fw-semibold mb-0">IMAX Screens</p>
+                <p class="text-muted" style="font-size:0.75rem;">Six-story laser display</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <p class="text-warning fs-4 mb-1">🎧</p>
+                <p class="text-white small fw-semibold mb-0">Dolby Atmos</p>
+                <p class="text-muted" style="font-size:0.75rem;">Immersive 12-ch sound</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <p class="text-warning fs-4 mb-1">🛋️</p>
+                <p class="text-white small fw-semibold mb-0">Recliner Seats</p>
+                <p class="text-muted" style="font-size:0.75rem;">Full-recline luxury</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <p class="text-warning fs-4 mb-1">🍿</p>
+                <p class="text-white small fw-semibold mb-0">In-seat Snacks</p>
+                <p class="text-muted" style="font-size:0.75rem;">Order with your ticket</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ NOW SHOWING ═══════════════════════ -->
 <section class="py-5">
     <div class="container">
-        <h2 class="mb-4 text-warning">Now Showing</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <p class="text-warning small text-uppercase fw-semibold mb-1">🎬 On Screen</p>
+                <h2 class="text-white fw-bold mb-0">Now Showing</h2>
+            </div>
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-warning btn-sm">
+                View All →
+            </a>
+        </div>
 
         <div class="row g-4">
             @foreach (var movie in Model)
             {
                 <div class="col-md-4">
-                    <div class="card bg-black text-light border-secondary h-100">
-                        <img src="@movie.PosterUrl" class="card-img-top" style="height:420px; object-fit:cover;" />
+                    <div class="card bg-black text-light border-secondary h-100 movie-home-card">
+                        <div style="height:420px; overflow:hidden; position:relative;">
+                            <img src="@movie.PosterUrl" class="w-100 h-100" style="object-fit:cover;" />
+                            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,#000 100%);"></div>
+                            <div style="position:absolute;bottom:12px;left:12px;">
+                                <span class="badge bg-dark border border-secondary text-warning me-1">@movie.Genre</span>
+                                <span class="badge bg-dark border border-secondary text-muted">⭐ @movie.Rating/10</span>
+                            </div>
+                        </div>
 
                         <div class="card-body">
-                            <h5 class="card-title text-warning">@movie.Title</h5>
-                            <p class="card-text">@movie.Description</p>
-                            <p class="text-muted mb-1">Genre: @movie.Genre</p>
-                            <p class="text-muted">Rating: @movie.Rating / 10</p>
+                            <h5 class="card-title text-warning fw-bold">@movie.Title</h5>
+                            <p class="card-text text-muted small">@movie.Description</p>
+                            <p class="text-muted small mb-1">
+                                <i class="bi bi-person me-1"></i>@movie.Director
+                            </p>
+                            <p class="text-muted small mb-3">
+                                <i class="bi bi-clock me-1"></i>@movie.DurationMinutes min
+                            </p>
 
                             <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"
                                class="btn btn-outline-warning w-100">
-                                Details
+                                View Details & Book
                             </a>
                         </div>
                     </div>
@@ -43,3 +124,270 @@
         </div>
     </div>
 </section>
+
+<!-- ═══════════════════════ OUR HALLS PREVIEW ═══════════════════════ -->
+<section class="py-5 bg-black">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="text-warning small text-uppercase fw-semibold mb-1">🏛️ Experience</p>
+            <h2 class="text-white fw-bold">Choose Your Hall</h2>
+            <p class="text-muted mx-auto" style="max-width:520px;">
+                From everyday Standard screens to immersive IMAX — every hall offers something special.
+            </p>
+        </div>
+        <div class="row g-4">
+            <!-- Standard -->
+            <div class="col-md-4">
+                <div class="hall-preview-card rounded-3 border border-secondary p-4 h-100 bg-dark text-center">
+                    <p class="fs-1 mb-2">🎦</p>
+                    <h5 class="text-white fw-bold">Standard</h5>
+                    <p class="text-muted small mb-3">HD Digital · Stereo Sound · Comfortable Seats</p>
+                    <p class="text-warning fw-bold mb-3">No surcharge</p>
+                    <a asp-controller="Halls" asp-action="Index" class="btn btn-outline-secondary btn-sm w-100">
+                        See Standard Halls
+                    </a>
+                </div>
+            </div>
+            <!-- Premium -->
+            <div class="col-md-4">
+                <div class="hall-preview-card rounded-3 border border-warning p-4 h-100 bg-dark text-center">
+                    <p class="fs-1 mb-2">✨</p>
+                    <h5 class="text-warning fw-bold">Premium</h5>
+                    <p class="text-muted small mb-3">4K Laser · Dolby Atmos · Full Recliner · In-seat Service</p>
+                    <p class="text-warning fw-bold mb-3">+$8 – $15 surcharge</p>
+                    <a asp-controller="Halls" asp-action="Index" class="btn btn-warning btn-sm w-100 text-dark fw-bold">
+                        See Premium Halls
+                    </a>
+                </div>
+            </div>
+            <!-- IMAX -->
+            <div class="col-md-4">
+                <div class="hall-preview-card rounded-3 border border-info p-4 h-100 bg-dark text-center">
+                    <p class="fs-1 mb-2">🎥</p>
+                    <h5 class="text-info fw-bold">IMAX</h5>
+                    <p class="text-muted small mb-3">Six-Story Screen · 12-Ch Sound · Laser 4K Projection</p>
+                    <p class="text-info fw-bold mb-3">+$12 surcharge</p>
+                    <a asp-controller="Halls" asp-action="Index" class="btn btn-info btn-sm w-100 text-dark fw-bold">
+                        See IMAX Halls
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ SNACKS PREVIEW ═══════════════════════ -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <p class="text-warning small text-uppercase fw-semibold mb-1">🍿 Concessions</p>
+                <h2 class="text-white fw-bold mb-0">Popular Snacks & Drinks</h2>
+            </div>
+            <a asp-controller="Food" asp-action="Index" class="btn btn-outline-warning btn-sm">
+                Full Menu →
+            </a>
+        </div>
+        <div class="row g-3">
+            <!-- Popcorn -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="/images/popcorn-classic.png" alt="Classic Popcorn"
+                         style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Classic Butter Popcorn</p>
+                    <p class="text-warning small mb-0">$5.50</p>
+                    <span class="badge bg-warning text-dark mt-1" style="font-size:0.65rem;">⭐ Best Seller</span>
+                </div>
+            </div>
+            <!-- Caramel -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="/images/caramel.png" alt="Caramel Popcorn"
+                         style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Caramel Popcorn</p>
+                    <p class="text-warning small mb-0">$6.00</p>
+                </div>
+            </div>
+            <!-- Spicy -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="/images/spicy.png" alt="Spicy Popcorn"
+                         style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Spicy Popcorn</p>
+                    <p class="text-warning small mb-0">$5.50</p>
+                </div>
+            </div>
+            <!-- Nachos -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=400"
+                         alt="Nachos" style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Nachos with Cheese</p>
+                    <p class="text-warning small mb-0">$5.00</p>
+                </div>
+            </div>
+            <!-- Coca-Cola -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400"
+                         alt="Coca-Cola" style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Coca-Cola Large</p>
+                    <p class="text-warning small mb-0">$3.50</p>
+                    <span class="badge bg-warning text-dark mt-1" style="font-size:0.65rem;">⭐ Best Seller</span>
+                </div>
+            </div>
+            <!-- OJ -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400"
+                         alt="Orange Juice" style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Fresh Orange Juice</p>
+                    <p class="text-warning small mb-0">$4.00</p>
+                </div>
+            </div>
+            <!-- Classic Combo -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400"
+                         alt="Classic Combo" style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Classic Combo</p>
+                    <p class="text-warning small mb-0">$8.00</p>
+                    <span class="badge bg-warning text-dark mt-1" style="font-size:0.65rem;">⭐ Best Seller</span>
+                </div>
+            </div>
+            <!-- Vanilla Ice Cream -->
+            <div class="col-6 col-md-3">
+                <div class="snack-preview-card rounded-3 bg-black border border-secondary overflow-hidden text-center p-3">
+                    <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400"
+                         alt="Vanilla Ice Cream" style="height:90px;width:90px;object-fit:cover;border-radius:50%;margin-bottom:10px;" />
+                    <p class="text-white fw-semibold small mb-0">Vanilla Ice Cream</p>
+                    <p class="text-warning small mb-0">$3.50</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a asp-controller="Food" asp-action="Index" class="btn btn-warning fw-semibold px-5">
+                🍿 View Full Menu & Order
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ ACTIVE OFFERS PREVIEW ═══════════════════════ -->
+<section class="py-5 bg-black">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <p class="text-warning small text-uppercase fw-semibold mb-1">🎫 Deals</p>
+                <h2 class="text-white fw-bold mb-0">Current Offers</h2>
+            </div>
+            <a asp-controller="Offers" asp-action="Index" class="btn btn-outline-warning btn-sm">
+                All Offers →
+            </a>
+        </div>
+        <div class="row g-4">
+            <!-- Student Tuesday -->
+            <div class="col-md-6 col-lg-4">
+                <div class="offer-card rounded-3 bg-dark border border-info h-100 p-4 position-relative overflow-hidden">
+                    <div class="offer-glow offer-glow-info"></div>
+                    <div class="position-relative">
+                        <span class="badge bg-info text-dark fw-bold px-3 py-2 mb-3 d-inline-block">20% OFF</span>
+                        <h6 class="text-white fw-bold mb-1">Student Tuesday Deal</h6>
+                        <p class="text-muted small mb-3">20% off all tickets every Tuesday. Valid student ID required.</p>
+                        <div class="promo-code-box d-flex align-items-center gap-3 p-3 rounded-3 mb-2">
+                            <div>
+                                <p class="text-muted small mb-0">Promo Code</p>
+                                <h6 class="text-white fw-bold mb-0 font-monospace">STUDENT20</h6>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-warning ms-auto copy-btn"
+                                    onclick="copyCode('STUDENT20', this)">
+                                <i class="bi bi-clipboard me-1"></i>Copy
+                            </button>
+                        </div>
+                        <small class="text-muted"><i class="bi bi-calendar me-1"></i>Valid until Dec 31, 2026</small>
+                    </div>
+                </div>
+            </div>
+            <!-- IMAX Weekend -->
+            <div class="col-md-6 col-lg-4">
+                <div class="offer-card rounded-3 bg-dark border border-primary h-100 p-4 position-relative overflow-hidden">
+                    <div class="offer-glow offer-glow-primary"></div>
+                    <div class="position-relative">
+                        <div class="d-flex gap-2 mb-3">
+                            <span class="badge bg-primary fw-bold px-3 py-2">$5 OFF</span>
+                            <span class="badge bg-dark border border-secondary text-muted">IMAX only</span>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">IMAX Weekend Special</h6>
+                        <p class="text-muted small mb-3">Book 2 IMAX tickets on weekends and get $5 off your total.</p>
+                        <div class="promo-code-box d-flex align-items-center gap-3 p-3 rounded-3 mb-2">
+                            <div>
+                                <p class="text-muted small mb-0">Promo Code</p>
+                                <h6 class="text-white fw-bold mb-0 font-monospace">IMAXWEEKEND</h6>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-warning ms-auto copy-btn"
+                                    onclick="copyCode('IMAXWEEKEND', this)">
+                                <i class="bi bi-clipboard me-1"></i>Copy
+                            </button>
+                        </div>
+                        <small class="text-muted"><i class="bi bi-calendar me-1"></i>Valid until Dec 31, 2026</small>
+                    </div>
+                </div>
+            </div>
+            <!-- Family Pack -->
+            <div class="col-md-6 col-lg-4">
+                <div class="offer-card rounded-3 bg-dark border border-danger h-100 p-4 position-relative overflow-hidden">
+                    <div class="offer-glow offer-glow-danger"></div>
+                    <div class="position-relative">
+                        <span class="badge bg-danger fw-bold px-3 py-2 mb-3 d-inline-block">25% OFF</span>
+                        <h6 class="text-white fw-bold mb-1">Family Pack</h6>
+                        <p class="text-muted small mb-3">4 tickets for the price of 3! Perfect for family outings.</p>
+                        <div class="promo-code-box d-flex align-items-center gap-3 p-3 rounded-3 mb-2">
+                            <div>
+                                <p class="text-muted small mb-0">Promo Code</p>
+                                <h6 class="text-white fw-bold mb-0 font-monospace">FAMILY4</h6>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-warning ms-auto copy-btn"
+                                    onclick="copyCode('FAMILY4', this)">
+                                <i class="bi bi-clipboard me-1"></i>Copy
+                            </button>
+                        </div>
+                        <small class="text-muted"><i class="bi bi-calendar me-1"></i>Valid until Dec 31, 2026</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ CTA BANNER ═══════════════════════ -->
+<section class="py-5 text-center" style="background:linear-gradient(135deg,#1a1000,#000);">
+    <div class="container">
+        <h2 class="text-white fw-bold display-6 mb-3">Ready for Your Next Cinema Night?</h2>
+        <p class="text-muted mb-4">Book your tickets today and choose from our exclusive halls, snacks, and offers.</p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-warning btn-lg fw-bold px-5">
+                🎬 Book Now
+            </a>
+            <a asp-controller="Offers" asp-action="Index" class="btn btn-outline-warning btn-lg px-5">
+                🎫 See All Offers
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+function copyCode(code, btn) {
+    navigator.clipboard.writeText(code).then(() => {
+        btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Copied!';
+        btn.classList.remove('btn-outline-warning');
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+            btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-warning');
+        }, 2000);
+    });
+}
+</script>
+}

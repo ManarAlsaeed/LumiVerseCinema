@@ -220,29 +220,30 @@ namespace MiniCinema.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddShowtime(Showtime showtime)
-        {
-            var check = RequireAdmin();
-            if (check != null) return check;
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> AddShowtime(Showtime showtime)
+{
+    var check = RequireAdmin();
+    if (check != null) return check;
 
-            if (ModelState.IsValid)
-            {
-                showtime.AvailableSeats = showtime.TotalSeats;
+    if (ModelState.IsValid)
+    {
+        showtime.Id = 0;
+        showtime.AvailableSeats = showtime.TotalSeats;
 
-                _context.Showtimes.Add(showtime);
-                await _context.SaveChangesAsync();
+        _context.Showtimes.Add(showtime);
+        await _context.SaveChangesAsync();
 
-                TempData["Success"] = "Showtime added successfully.";
+        TempData["Success"] = "Showtime added successfully.";
 
-                return RedirectToAction("Movies");
-            }
+        return RedirectToAction("Movies");
+    }
 
-            var movie = await _context.Movies.FindAsync(showtime.MovieId);
-            ViewBag.Movie = movie;
+    var movie = await _context.Movies.FindAsync(showtime.MovieId);
+    ViewBag.Movie = movie;
 
-            return View(showtime);
-        }
+    return View(showtime);
+}
         // =================== FOOD MANAGEMENT ===================
  
 // GET: /Admin/Food
